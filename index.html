@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&amp;D Campaign Homepage</title>
+  
+  <!-- REMOVED: <script src="/_sdk/element_sdk.js"></script> -->
+  <!-- REMOVED: <script src="/_sdk/data_sdk.js" type="text/javascript"></script> -->
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Lora:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    /* Base Reset */
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lora', serif;
+      overflow-x: hidden;
+      background-color: #1a0b2e; /* Fallback */
+      color: #e8d4b8; /* Fallback */
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      min-height: 100vh; /* Ensure it covers full height */
+      overflow-x: hidden;
+      background-color: #1a0b2e;
+      color: #e8d4b8;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      width: 100%;
+      min-height: 90vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #1a0b2e 0%, #3d1f47 50%, #5c3d5e 100%);
+      overflow: hidden;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(75, 0, 130, 0.3) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 40px 20px;
+      max-width: 1000px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .campaign-title {
+      font-family: 'Cinzel', serif;
+      font-size: 4em;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+      letter-spacing: 3px;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      font-size: 1.4em;
+      font-style: italic;
+      opacity: 0.95;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      animation: bounce 2s infinite;
+      opacity: 0.7;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    /* Content Sections */
+    .content-section {
+      width: 100%;
+      padding: 80px 20px;
+    }
+
+    .content-section.alt {
+      background: linear-gradient(to bottom, rgba(45, 25, 60, 0.3) 0%, rgba(30, 15, 40, 0.3) 100%);
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5em;
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      padding-bottom: 20px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, currentColor, transparent);
+    }
+
+    /* Synopsis Section */
+    .synopsis-content {
+      font-size: 1.2em;
+      line-height: 1.8;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      background-color: #2d1b3d;
+      transition: background-color 0.3s;
+    }
+
+    .expand-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Cinzel', serif;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      background-color: #8b6914;
+      color: #fff;
+    }
+
+    .expand-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      filter: brightness(1.1);
+    }
+
+    .synopsis-expanded {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .synopsis-expanded.open {
+      max-height: 2000px;
+    }
+
+    /* Moodboard */
+    .moodboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .mood-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .mood-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .mood-card-bg {
+      width: 100%;
+      height: 100%;
+      background-color: #2d1b3d; 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: transform 0.5s ease;
+    }
+    
+    .mood-card:hover .mood-card-bg {
+      transform: scale(1.05);
+    }
+
+    .mood-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 15px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 40%, transparent 100%);
+      font-family: 'Cinzel', serif;
+      font-size: 1.2em;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Location Section */
+    .location-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .location-map {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(75, 0, 130, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5em;
+    }
+
+    .location-info h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .location-info p {
+      font-size: 1.2em;
+      line-height: 1.8;
+    }
+
+    /* NPCs Section */
+    .npc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .npc-card {
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: #2d1b3d;
+    }
+
+    .npc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .npc-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      border: 3px solid #6b4ba1;
+      background-color: rgba(107, 75, 161, 0.2);
+    }
+
+    .npc-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .npc-role {
+      text-align: center;
+      font-style: italic;
+      opacity: 0.8;
+      margin-bottom: 15px;
+      font-size: 1.1em;
+    }
+
+    .npc-desc {
+      line-height: 1.6;
+      font-size: 1em;
+    }
+
+    /* Player Info Section */
+    .player-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .info-card {
+      padding: 35px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      border-left: 4px solid #6b4ba1;
+      background-color: #2d1b3d;
+    }
+
+    .info-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6em;
+      margin-bottom: 20px;
+    }
+
+    .info-card p {
+      line-height: 1.7;
+      font-size: 1.05em;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .campaign-title {
+        font-size: 2.5em;
+      }
+
+      .tagline {
+        font-size: 1.1em;
+      }
+
+      .section-title {
+        font-size: 2em;
+      }
+
+      .location-content {
+        grid-template-columns: 1fr;
+      }
+
+      .player-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-section {
+        padding: 50px 15px;
+      }
+      
+      .location-map {
+        font-size: 3em;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <!-- Tailwind CSS CDN (Safe for Vercel) -->
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-content">
+        <h1 class="campaign-title" id="campaign-title">The Shattered Crown</h1>
+        <p class="tagline" id="tagline">When kingdoms fall, heroes rise from the ashes</p>
+      </div>
+      <div class="scroll-indicator" onclick="document.querySelector('.content-section').scrollIntoView({behavior: 'smooth'})">
+        ⌄
+      </div>
+    </section>
+
+    <!-- Campaign Synopsis -->
+    <section class="content-section">
+      <div class="section-container">
+        <h2 class="section-title">Campaign Synopsis</h2>
+        <div class="synopsis-content">
+          <p id="synopsis-text">The ancient kingdom of Aeldoria lies in ruins after the mysterious disappearance of King Aldric and the shattering of the Crown of Unity. Without the crown's magic, the land fragments—literally and politically. Rival nobles claim territories, strange rifts tear through reality, and whispers speak of an ancient evil awakening in the north. You are strangers brought together by fate in the border town of Thornhaven, each carrying your own reasons to seek the crown's fragments. The path ahead is perilous, but legends say those who unite the crown shall command its power.</p>
+          <div id="synopsis-expanded" class="synopsis-expanded">
+            <p style="margin-top: 20px;">Dark omens plague the land: crops wither, the dead walk, and reality itself seems unstable. The Church of the Celestial Order maintains that only through divine intervention can order be restored, while the Mage Conclave believes arcane knowledge holds the key. Meanwhile, common folk suffer as warlords carve out petty kingdoms from Aeldoria's corpse.</p>
+          </div>
+          <button class="expand-btn" id="expand-btn" onclick="toggleSynopsis()">Read More</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Moodboard -->
+    <section class="content-section alt">
+      <div class="section-container">
+        <h2 class="section-title">World Atmosphere</h2>
+        <div class="moodboard-grid">
+          <div class="mood-card" id="mood-card-1">
+            <div class="mood-card-bg"></div>
+            <div class="mood-caption">Crumbling Kingdoms</div>
+          </div>
+          <div class="mood-card" id="mood-card-2">
+            <div class="mood-card-bg"></div>
+            <div class="mood-caption">Medieval Warfare</div>
+          </div>
+          <div class="mood-card" id="mood-card-3">
+            <div class="mood-card-bg"></div>
+            <div class="mood-caption">Ancient Magic</div>
+          </div>
+          <div class="mood-card" id="mood-card-4">
+            <div class="mood-card-bg"></div>
+            <div class="mood-caption">Dark Fantasy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Starting Location -->
+    <section class="content-section">
+      <div class="section-container">
+        <h2 class="section-title">Starting Location</h2>
+        <div class="location-content">
+          <div class="location-map">
+            🗺️
+          </div>
+          <div class="location-info">
+            <h3 id="location-name">Thornhaven</h3>
+            <p id="location-desc">A fortified border town nestled between the Whisperwood Forest and the Ironpeak Mountains. Once a prosperous trading post, Thornhaven now serves as a refuge for those fleeing the chaos engulfing Aeldoria. The town is ruled by Lady Merideth, a pragmatic leader who maintains uneasy neutrality between warring factions. Strange occurrences have plagued the town recently—disappearances in the forest, unnatural storms, and reports of spectral lights in the old ruins to the north.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Known NPCs -->
+    <section class="content-section alt">
+      <div class="section-container">
+        <h2 class="section-title">Known NPCs</h2>
+        <div class="npc-grid">
+          <div class="npc-card">
+            <div class="npc-avatar">👑</div>
+            <h3 class="npc-name" id="npc1-name">Lady Merideth Thornwood</h3>
+            <p class="npc-role" id="npc1-role">Ruler of Thornhaven</p>
+            <p class="npc-desc" id="npc1-desc">A sharp-minded noble in her forties who inherited Thornhaven from her father. She walks a diplomatic tightrope, keeping the town independent while rival lords circle like vultures. Known for her silver tongue and network of spies.</p>
+          </div>
+          <div class="npc-card">
+            <div class="npc-avatar">🧙</div>
+            <h3 class="npc-name" id="npc2-name">Aldren the Keeper</h3>
+            <p class="npc-role" id="npc2-role">Town Sage &amp; Historian</p>
+            <p class="npc-desc" id="npc2-desc">An elderly scholar who maintains Thornhaven's library and serves as advisor to Lady Merideth. He possesses extensive knowledge of Aeldoria's history and the Crown of Unity. His hands shake from a mysterious affliction.</p>
+          </div>
+          <div class="npc-card">
+            <div class="npc-avatar">⚔️</div>
+            <h3 class="npc-name" id="npc3-name">Captain Garren Blackstone</h3>
+            <p class="npc-role" id="npc3-role">Commander of the Town Guard</p>
+            <p class="npc-desc" id="npc3-desc">A grizzled veteran of the kingdom's last wars. Loyal to a fault and fiercely protective of Thornhaven's people. He maintains strict watch over the town walls and organizes patrols into the surrounding wilderness.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Player Information -->
+    <section class="content-section">
+      <div class="section-container">
+        <h2 class="section-title">Player Information</h2>
+        <div class="player-info-grid">
+          <div class="info-card">
+            <h3>Campaign Tone &amp; Themes</h3>
+            <p id="campaign-tone">This is a dark fantasy campaign balancing serious themes with moments of heroism and hope. Expect political intrigue, moral dilemmas, and high-stakes combat. The world is dangerous but not grimdark—heroes can make a difference. Themes include power and corruption, the cost of war, redemption, and the nature of unity.</p>
+          </div>
+          <div class="info-card">
+            <h3>House Rules &amp; Expectations</h3>
+            <p id="house-rules">We use milestone leveling. Flanking grants advantage. Healing potions are bonus actions. Session length: 3-4 hours. Please arrive on time and stay engaged. Respect other players' boundaries and use safety tools. Character creation is point buy, all official books allowed with DM approval.</p>
+          </div>
+          <div class="info-card">
+            <h3>Session Zero Notes</h3>
+            <p id="session-notes">Before we begin, we'll establish group expectations, discuss lines and veils, create characters together, and establish party bonds. Bring 2-3 character concepts. We'll also discuss scheduling, communication preferences, and any accessibility needs. First session will be character-focused roleplay in Thornhaven.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const defaultConfig = {
+      background_color: "#1a0b2e",
+      surface_color: "#2d1b3d",
+      text_color: "#e8d4b8",
+      primary_action_color: "#8b6914",
+      secondary_action_color: "#6b4ba1",
+      font_family: "Lora",
+      font_size: 16,
+      campaign_title: "The Shattered Crown",
+      tagline: "When kingdoms fall, heroes rise from the ashes",
+      synopsis_text: "The ancient kingdom of Aeldoria lies in ruins after the mysterious disappearance of King Aldric and the shattering of the Crown of Unity. Without the crown's magic, the land fragments—literally and politically. Rival nobles claim territories, strange rifts tear through reality, and whispers speak of an ancient evil awakening in the north. You are strangers brought together by fate in the border town of Thornhaven, each carrying your own reasons to seek the crown's fragments. The path ahead is perilous, but legends say those who unite the crown shall command its power.",
+      
+      // Image Configuration for Moodboard
+      mood_img_1: "https://picsum.photos/seed/ruinscastle/600/600.jpg", 
+      mood_img_2: "https://picsum.photos/seed/warfare/600/600.jpg",
+      mood_img_3: "https://picsum.photos/seed/magicglow/600/600.jpg",
+      mood_img_4: "https://picsum.photos/seed/darkforest/600/600.jpg",
+
+      location_name: "Thornhaven",
+      location_desc: "A fortified border town nestled between the Whisperwood Forest and the Ironpeak Mountains. Once a prosperous trading post, Thornhaven now serves as a refuge for those fleeing the chaos engulfing Aeldoria. The town is ruled by Lady Merideth, a pragmatic leader who maintains uneasy neutrality between warring factions. Strange occurrences have plagued the town recently—disappearances in the forest, unnatural storms, and reports of spectral lights in the old ruins to the north.",
+      
+      npc1_name: "Lady Merideth Thornwood",
+      npc1_role: "Ruler of Thornhaven",
+      npc1_desc: "A sharp-minded noble in her forties who inherited Thornhaven from her father. She walks a diplomatic tightrope, keeping the town independent while rival lords circle like vultures. Known for her silver tongue and network of spies.",
+      
+      npc2_name: "Aldren the Keeper",
+      npc2_role: "Town Sage & Historian",
+      npc2_desc: "An elderly scholar who maintains Thornhaven's library and serves as advisor to Lady Merideth. He possesses extensive knowledge of Aeldoria's history and the Crown of Unity. His hands shake from a mysterious affliction.",
+      
+      npc3_name: "Captain Garren Blackstone",
+      npc3_role: "Commander of the Town Guard",
+      npc3_desc: "A grizzled veteran of the kingdom's last wars. Loyal to a fault and fiercely protective of Thornhaven's people. He maintains strict watch over the town walls and organizes patrols into the surrounding wilderness.",
+      
+      campaign_tone: "This is a dark fantasy campaign balancing serious themes with moments of heroism and hope. Expect political intrigue, moral dilemmas, and high-stakes combat. The world is dangerous but not grimdark—heroes can make a difference. Themes include power and corruption, the cost of war, redemption, and the nature of unity.",
+      
+      house_rules: "We use milestone leveling. Flanking grants advantage. Healing potions are bonus actions. Session length: 3-4 hours. Please arrive on time and stay engaged. Respect other players' boundaries and use safety tools. Character creation is point buy, all official books allowed with DM approval.",
+      
+      session_notes: "Before we begin, we'll establish group expectations, discuss lines and veils, create characters together, and establish party bonds. Bring 2-3 character concepts. We'll also discuss scheduling, communication preferences, and any accessibility needs. First session will be character-focused roleplay in Thornhaven."
+    };
+
+    function toggleSynopsis() {
+      const expanded = document.getElementById('synopsis-expanded');
+      const btn = document.getElementById('expand-btn');
+      if (expanded.classList.contains('open')) {
+        expanded.classList.remove('open');
+        btn.textContent = 'Read More';
+      } else {
+        expanded.classList.add('open');
+        btn.textContent = 'Read Less';
+      }
+    }
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const baseFontStack = 'serif';
+      const titleFontStack = "'Cinzel', serif";
+
+      // Colors
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      // Apply background color
+      document.querySelector('.hero-section').style.background = `linear-gradient(135deg, ${bgColor} 0%, ${surfaceColor} 50%, ${secondaryColor} 100%)`;
+      document.querySelector('.page-wrapper').style.background = bgColor;
+      document.querySelector('.page-wrapper').style.color = textColor;
+
+      // Apply surface colors
+      document.querySelectorAll('.synopsis-content, .npc-card, .info-card').forEach(el => {
+        el.style.background = surfaceColor;
+        el.style.color = textColor;
+      });
+
+      // Apply primary action color
+      document.querySelector('.expand-btn').style.background = primaryColor;
+      document.querySelector('.expand-btn').style.color = '#fff';
+
+      // Apply secondary action color to borders and accents
+      document.querySelectorAll('.info-card').forEach(el => {
+        el.style.borderLeftColor = secondaryColor;
+      });
+
+      document.querySelectorAll('.npc-avatar').forEach(el => {
+        el.style.borderColor = secondaryColor;
+        el.style.background = hexToRgba(secondaryColor, 0.2);
+      });
+
+      // Apply text color
+      document.querySelectorAll('.campaign-title, .tagline, .section-title, .npc-name, .info-card h3, .location-info h3, .mood-caption').forEach(el => {
+        el.style.color = textColor;
+      });
+
+      // Apply fonts
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.querySelectorAll('.campaign-title, .section-title, .npc-name, .info-card h3, .location-info h3, .expand-btn, .mood-caption').forEach(el => {
+        el.style.fontFamily = `${customFont}, ${titleFontStack}`;
+      });
+
+      // Apply font sizes
+      document.querySelector('.campaign-title').style.fontSize = `${baseSize * 2.5}px`;
+      document.querySelector('.tagline').style.fontSize = `${baseSize * 1.4}px`;
+      document.querySelectorAll('.section-title').forEach(el => {
+        el.style.fontSize = `${baseSize * 2}px`;
+      });
+      document.querySelectorAll('.synopsis-content p, .location-info p').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.2}px`;
+      });
+      document.querySelectorAll('.npc-name, .location-info h3').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.6}px`;
+      });
+      document.querySelectorAll('.npc-role, .mood-caption').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.1}px`;
+      });
+      document.querySelectorAll('.npc-desc, .info-card p').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.05}px`;
+      });
+
+      // Apply Moodboard Images
+      const moodImg1 = config.mood_img_1 || defaultConfig.mood_img_1;
+      const moodImg2 = config.mood_img_2 || defaultConfig.mood_img_2;
+      const moodImg3 = config.mood_img_3 || defaultConfig.mood_img_3;
+      const moodImg4 = config.mood_img_4 || defaultConfig.mood_img_4;
+
+      const card1 = document.querySelector('#mood-card-1 .mood-card-bg');
+      const card2 = document.querySelector('#mood-card-2 .mood-card-bg');
+      const card3 = document.querySelector('#mood-card-3 .mood-card-bg');
+      const card4 = document.querySelector('#mood-card-4 .mood-card-bg');
+
+      if(card1) card1.style.backgroundImage = `url('${moodImg1}')`;
+      if(card2) card2.style.backgroundImage = `url('${moodImg2}')`;
+      if(card3) card3.style.backgroundImage = `url('${moodImg3}')`;
+      if(card4) card4.style.backgroundImage = `url('${moodImg4}')`;
+
+      // Update text content
+      document.getElementById('campaign-title').textContent = config.campaign_title || defaultConfig.campaign_title;
+      document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
+      document.getElementById('synopsis-text').textContent = config.synopsis_text || defaultConfig.synopsis_text;
+      document.getElementById('location-name').textContent = config.location_name || defaultConfig.location_name;
+      document.getElementById('location-desc').textContent = config.location_desc || defaultConfig.location_desc;
+      
+      document.getElementById('npc1-name').textContent = config.npc1_name || defaultConfig.npc1_name;
+      document.getElementById('npc1-role').textContent = config.npc1_role || defaultConfig.npc1_role;
+      document.getElementById('npc1-desc').textContent = config.npc1_desc || defaultConfig.npc1_desc;
+      
+      document.getElementById('npc2-name').textContent = config.npc2_name || defaultConfig.npc2_name;
+      document.getElementById('npc2-role').textContent = config.npc2_role || defaultConfig.npc2_role;
+      document.getElementById('npc2-desc').textContent = config.npc2_desc || defaultConfig.npc2_desc;
+      
+      document.getElementById('npc3-name').textContent = config.npc3_name || defaultConfig.npc3_name;
+      document.getElementById('npc3-role').textContent = config.npc3_role || defaultConfig.npc3_role;
+      document.getElementById('npc3-desc').textContent = config.npc3_desc || defaultConfig.npc3_desc;
+      
+      document.getElementById('campaign-tone').textContent = config.campaign_tone || defaultConfig.campaign_tone;
+      document.getElementById('house-rules').textContent = config.house_rules || defaultConfig.house_rules;
+      document.getElementById('session-notes').textContent = config.session_notes || defaultConfig.session_notes;
+    }
+
+    function hexToRgba(hex, alpha) {
+      let r = parseInt(hex.slice(1, 3), 16);
+      let g = parseInt(hex.slice(3, 5), 16);
+      let b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Check for SDK (Optional, for compatibility)
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["campaign_title", config.campaign_title || defaultConfig.campaign_title],
+          ["tagline", config.tagline || defaultConfig.tagline],
+          ["synopsis_text", config.synopsis_text || defaultConfig.synopsis_text],
+          ["location_name", config.location_name || defaultConfig.location_name],
+          ["location_desc", config.location_desc || defaultConfig.location_desc],
+          ["npc1_name", config.npc1_name || defaultConfig.npc1_name],
+          ["npc1_role", config.npc1_role || defaultConfig.npc1_role],
+          ["npc1_desc", config.npc1_desc || defaultConfig.npc1_desc],
+          ["npc2_name", config.npc2_name || defaultConfig.npc2_name],
+          ["npc2_role", config.npc2_role || defaultConfig.npc2_role],
+          ["npc2_desc", config.npc2_desc || defaultConfig.npc2_desc],
+          ["npc3_name", config.npc3_name || defaultConfig.npc3_name],
+          ["npc3_role", config.npc3_role || defaultConfig.npc3_role],
+          ["npc3_desc", config.npc3_desc || defaultConfig.npc3_desc],
+          ["campaign_tone", config.campaign_tone || defaultConfig.campaign_tone],
+          ["house_rules", config.house_rules || defaultConfig.house_rules],
+          ["session_notes", config.session_notes || defaultConfig.session_notes],
+          ["mood_img_1", config.mood_img_1 || defaultConfig.mood_img_1],
+          ["mood_img_2", config.mood_img_2 || defaultConfig.mood_img_2],
+          ["mood_img_3", config.mood_img_3 || defaultConfig.mood_img_3],
+          ["mood_img_4", config.mood_img_4 || defaultConfig.mood_img_4]
+        ])
+      });
+    } else {
+      // IMPORTANT: Run defaults immediately so the page renders properly on Vercel
+      onConfigChange(defaultConfig);
+    }
+  </script>
+</body>
+</html>
