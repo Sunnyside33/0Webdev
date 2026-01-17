@@ -113,6 +113,13 @@
     }
 
     /* CTA BUTTON STYLE */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem; /*jarak antar tombol */
+      justify-content: center;
+      margin-top: 1rem;
+      flex-wrap: wrap; /* Biar turun ke bawah kalau pakai HP */
+    }
     .hero-cta {
       display: inline-block;
       padding: 1rem 2.5rem;
@@ -123,12 +130,29 @@
       letter-spacing: 0.5px;
       box-shadow: 0 4px 6px rgba(0, 24, 62, 0.2);
     }
+    .hero-cta-secondary {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 6px;
+      font-weight: 700;
+      transition: 0.3s ease;
+    }
 
     .hero-cta:hover {
       background: var(--primary-light);
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0, 24, 62, 0.3);
     }
+
+    .hero-cta-secondary:hover {
+      background: var(--primary);
+      color: var(--text-light);
+      transform: translateY(-2px);
+    }
+
 
     /* =========================
        SECTIONS
@@ -328,6 +352,7 @@
         Bringing tactical depth, creative characters, and collaborative storytelling through Pathfinder 2e.
       </p>
       <a href="#campaigns" class="hero-cta">Explore My Campaigns</a>
+      <a href="gm-services.html" class="hero-cta-secondary">Jasa GM dan FoundryVTT</a>
     </div>
   </section>
 
