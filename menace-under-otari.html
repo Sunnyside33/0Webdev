@@ -1,107 +1,377 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Menace Under Otari - Sunnysid33</title>
-  
-  <!-- Gunakan CSS yang SAMA PERSIS agar tema konsisten -->
+  <title>The Menace Under Otari — Sunnysid33</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-main: #ffffff;
-      --bg-alt: #f8f9fa;
-      --surface: #ffffff;
-      --text-main: #333333;
-      --text-soft: #666666;
-      --text-light: #ffffff;
-      --primary: #00183e;
-      --primary-light: #0a2d5f;
-      --border: #e5e5e5;
+      --navy:    #00183e;
+      --navy-dk: #000e27;
+      --navy-lt: #0a2d5f;
+      --gold:    #c9a84c;
+      --gold-lt: #e6c97a;
+      --gold-dk: #8a6d2f;
+      --cream:   #fdf8f0;
+      --white:   #ffffff;
+      --smoke:   #f4f1eb;
+      --text:    #2a2520;
+      --muted:   #6b6560;
+      --border:  #e2d9c8;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Lato', sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header Style Khusus Page Ini */
-    .page-header {
-      background: var(--primary);
-      color: var(--text-light);
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(0,14,39,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-back:hover { color: var(--gold-lt); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--navy-dk);
+      padding: 9rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 80% at 50% 120%, rgba(201,168,76,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 20% 30%, rgba(10,45,95,0.4) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .page-hero-inner { position: relative; z-index: 1; }
+
+    .page-number {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: rgba(201,168,76,0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.2rem auto 1.2rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    /* Overview */
+    .overview {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 2px;
+      padding: 2.5rem 3rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .overview p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    /* Details Grid */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .detail-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 1.75rem 2rem;
+    }
+
+    .detail-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Players */
+    .players-section {
+      background: var(--navy);
+      border-radius: 2px;
+      padding: 2.5rem 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .players-section .section-eyebrow { color: rgba(201,168,76,0.6); }
+    .players-section .section-heading { color: var(--white); margin-bottom: 1.5rem; }
+
+    .players-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .player-chip {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px;
+      padding: 0.5rem 1.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold-lt);
+      letter-spacing: 0.5px;
+    }
+
+    /* Note / Story */
+    .note-card {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 2rem 2.5rem;
+      border-radius: 2px;
+    }
+
+    .note-card p {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* Back */
+    .back-section {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.25s;
+    }
+
+    .btn-back:hover { background: var(--navy-lt); }
+
+    footer {
+      background: var(--navy-dk);
       padding: 2rem;
       text-align: center;
-    }
-    .page-header h1 { color: var(--text-light); font-family: 'Cinzel', serif; }
-
-    .back-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1.5rem;
-      background: rgba(255,255,255,0.2);
-      color: var(--text-light);
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-    }
-    .back-btn:hover { background: rgba(255,255,255,0.3); }
-
-    .content-container {
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 0 2rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
     }
 
-    .campaign-title {
+    footer p {
       font-family: 'Cinzel', serif;
-      color: var(--primary);
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.25);
+      margin: 0;
     }
 
-    .session-details {
-      background: var(--bg-alt);
-      padding: 2rem;
-      border-radius: 8px;
-      margin-top: 2rem;
-      border: 1px solid var(--border);
-    }
+    footer span { color: var(--gold); }
 
-    h3 { color: var(--primary); margin-bottom: 0.5rem; }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      main { padding: 3rem 1.25rem; }
+      .overview, .players-section { padding: 1.75rem 1.5rem; }
+      .details-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
-
 <body>
 
-  <header class="page-header">
-    <h1>Menace Under Otari</h1>
-    <a href="/#campaigns" class="back-btn">← Back to Campaigns</a>
-  </header>
+  <nav>
+    <a href="index.html" class="nav-logo">Sunnysid33</a>
+    <a href="index.html#campaigns" class="nav-back">← Campaigns</a>
+  </nav>
 
-  <div class="content-container">
-    <h2 class="campaign-title">Session Overview</h2>
-    <p>
-      Keluarga Tamily membutuhkan bantuan—dan cepat! Di bawah gudang ikan mereka, gerombolan kobold sedang menggali
-      sarang dan bersiap meneror Otari. Birokrasi terlalu lambat, jadi kamulah penyelamat mereka.
-
-      Turun ke bawah tanah yang gelap dan hadapi makhluk-makhluk ganas, dan akhiri ancaman sebelum semuanya terlambat.
-      Keselamatan Otari bergantung pada kalian!      
-    </p>
-
-    <div class="session-details">
-      <h3>📝 Session Details</h3>
-      <p><strong>Level:</strong> 1-2 </p>
-      <p><strong>Adventure Path:</strong> Menace Under Otari</p>
-      <p><strong>System:</strong> Pathfinder 2e Remaster</p>
-      <p><strong>Date:</strong> 3 Oktober - 17 Oktober 2025</p>
-      <p><strong>Player:</strong> Toni D'Angelo, Torchie, Rasz, Leaf, Erie Ophelia</p>
-      <br>
-      <p><em>Note goes here!</em></p>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-number">Campaign · 01</div>
+      <h1 class="page-title">The Menace<br>Under Otari</h1>
+      <div class="page-divider"></div>
+      <p class="page-subtitle">Kegelapan di bawah gudang ikan Tamily memanggil para pahlawan.</p>
     </div>
   </div>
+
+  <main>
+
+    <div class="overview">
+      <div class="section-eyebrow">Sinopsis</div>
+      <h2 class="section-heading">Session Overview</h2>
+      <p>
+        Keluarga Tamily membutuhkan bantuan — dan cepat! Di bawah gudang ikan mereka, gerombolan kobold sedang menggali
+        sarang dan bersiap meneror kota Otari. Birokrasi bergerak terlalu lambat, jadi kalianlah penyelamat mereka.
+        Turun ke kedalaman yang gelap, hadapi makhluk-makhluk ganas, dan akhiri ancaman sebelum semuanya terlambat.
+        Keselamatan Otari bergantung pada kalian!
+      </p>
+    </div>
+
+    <div class="details-grid">
+      <div class="detail-card">
+        <div class="detail-label">Level</div>
+        <div class="detail-value">1 – 2</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">Adventure Path</div>
+        <div class="detail-value">Menace Under Otari</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">Sistem</div>
+        <div class="detail-value">Pathfinder 2e Remaster</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-label">Tanggal</div>
+        <div class="detail-value">3 – 17 Oktober 2025</div>
+      </div>
+    </div>
+
+    <div class="players-section">
+      <div class="section-eyebrow">Adventurers</div>
+      <div class="section-heading">Pemain</div>
+      <div class="players-list">
+        <span class="player-chip">Toni D'Angelo</span>
+        <span class="player-chip">Torchie</span>
+        <span class="player-chip">Rasz</span>
+        <span class="player-chip">Leaf</span>
+        <span class="player-chip">Erie Ophelia</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <p>
+        ✨ Campaign perdana di Otari — memperkenalkan dunia Pathfinder 2e kepada para adventurer baru.
+        Sesi penuh tawa, kejutan, dan satu momen kobold yang tak akan pernah terlupakan.
+      </p>
+    </div>
+
+    <div class="back-section">
+      <a href="index.html#campaigns" class="btn-back">← Kembali ke Campaigns</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 <span>Sunnysid33</span> · #Duta Pathfinder 2e Indonesia</p>
+  </footer>
 
 </body>
 </html>

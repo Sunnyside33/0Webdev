@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Builder — Sunnysid33</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:    #00183e;
+      --navy-dk: #000e27;
+      --navy-lt: #0a2d5f;
+      --gold:    #c9a84c;
+      --gold-lt: #e6c97a;
+      --gold-dk: #8a6d2f;
+      --cream:   #fdf8f0;
+      --white:   #ffffff;
+      --smoke:   #f4f1eb;
+      --text:    #2a2520;
+      --muted:   #6b6560;
+      --border:  #e2d9c8;
+      --danger:  #c0392b;
+      --success: #27ae60;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy-dk);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .topbar-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .topbar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── LAYOUT ── */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      min-height: calc(100vh - 57px);
+    }
+
+    /* ── SIDEBAR FORM ── */
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 57px);
+      position: sticky;
+      top: 57px;
+    }
+
+    .sidebar-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--navy);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      font-style: italic;
+    }
+
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--smoke);
+      color: var(--text);
+      font-family: 'Crimson Pro', serif;
+      font-size: 1rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--gold);
+      background: var(--white);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.5;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238a6d2f' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+    }
+
+    .player-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--smoke);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--muted);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-icon:hover { background: #fce4e4; border-color: var(--danger); color: var(--danger); }
+
+    .btn-add-player {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px dashed var(--border);
+      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: all 0.2s;
+      margin-top: 0.25rem;
+    }
+
+    .btn-add-player:hover { border-color: var(--gold); color: var(--gold-dk); background: rgba(201,168,76,0.05); }
+
+    /* ── GENERATE BUTTON ── */
+    .btn-generate {
+      width: 100%;
+      padding: 1rem;
+      background: var(--navy);
+      color: var(--gold);
+      border: none;
+      border-radius: 3px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-generate:hover { background: var(--navy-lt); transform: translateY(-1px); }
+    .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── MAIN AREA ── */
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      background: var(--smoke);
+    }
+
+    .preview-toolbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-status {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .status-dot.generating { background: var(--gold); animation: pulse 1s infinite; }
+    .status-dot.ready { background: var(--success); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-action {
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--white);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover { border-color: var(--navy); background: var(--navy); color: var(--gold); }
+    .btn-action:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-action.primary {
+      background: var(--gold);
+      color: var(--navy-dk);
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+    .btn-action.primary:hover { background: var(--gold-lt); border-color: var(--gold-lt); color: var(--navy-dk); }
+
+    /* ── PREVIEW FRAME ── */
+    .preview-container {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .preview-frame-wrap {
+      flex: 1;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    iframe#preview {
+      width: 100%;
+      height: 100%;
+      border: none;
+      min-height: 600px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .empty-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-text {
+      font-size: 1rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── INDEX SNIPPET ── */
+    .index-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .index-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 0.75rem;
+    }
+
+    .code-block {
+      background: var(--navy-dk);
+      border-radius: 3px;
+      padding: 1rem 1.25rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #a8d8a8;
+      line-height: 1.6;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block .key { color: #ffb347; }
+    .code-block .val { color: #87ceeb; }
+    .code-block .tag { color: #c9a84c; }
+
+    .btn-copy-code {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.3rem 0.75rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 3px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.65rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-copy-code:hover { background: rgba(255,255,255,0.2); color: white; }
+
+    /* ── STEP GUIDE ── */
+    .steps {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 30px;
+      background: var(--border);
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 0 auto 0.4rem;
+    }
+
+    .step.active .step-num {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy-dk);
+    }
+
+    .step.done .step-num {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+
+    .step-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── LOADING OVERLAY ── */
+    .loading-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(253,248,240,0.92);
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      border-radius: 4px;
+    }
+
+    .loading-overlay.visible { display: flex; }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .app-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      iframe#preview { min-height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="index.html" class="topbar-logo">Sunnysid33</a>
+    <span class="topbar-title">⚔ Campaign Page Builder</span>
+    <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:1px;color:rgba(255,255,255,0.3);">GM Tools</span>
+  </div>
+
+  <div class="app-layout">
+
+    <!-- ─── SIDEBAR FORM ─── -->
+    <aside class="sidebar">
+      <div class="steps" id="steps">
+        <div class="step active" id="step1">
+          <div class="step-num">1</div>
+          <div class="step-label">Isi Data</div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-num">2</div>
+          <div class="step-label">Generate</div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-num">3</div>
+          <div class="step-label">Download</div>
+        </div>
+      </div>
+
+      <div class="sidebar-heading">Campaign Baru</div>
+      <p class="sidebar-sub">Isi detail di bawah, lalu generate halaman HTML otomatis.</p>
+
+      <!-- Campaign Info -->
+      <div class="form-section">
+        <div class="form-section-title">Info Campaign</div>
+        <div class="field">
+          <label>Nama Campaign *</label>
+          <input type="text" id="f-title" placeholder="cth. Kingmaker, Age of Ashes...">
+        </div>
+        <div class="field">
+          <label>Nomor Campaign</label>
+          <input type="text" id="f-number" placeholder="cth. 03">
+        </div>
+        <div class="field">
+          <label>Adventure Path / Module</label>
+          <input type="text" id="f-path" placeholder="cth. Kingmaker Adventure Path">
+        </div>
+        <div class="field">
+          <label>Sistem</label>
+          <select id="f-system">
+            <option value="Pathfinder 2e Remaster">Pathfinder 2e Remaster</option>
+            <option value="Pathfinder 2e (Legacy)">Pathfinder 2e (Legacy)</option>
+            <option value="Pathfinder 1e">Pathfinder 1e</option>
+            <option value="Starfinder">Starfinder</option>
+            <option value="D&D 5e">D&D 5e</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Session Details -->
+      <div class="form-section">
+        <div class="form-section-title">Detail Sesi</div>
+        <div class="field">
+          <label>Level</label>
+          <input type="text" id="f-level" placeholder="cth. 1–5 atau 1+">
+        </div>
+        <div class="field">
+          <label>Tanggal Mulai</label>
+          <input type="date" id="f-date-start">
+        </div>
+        <div class="field">
+          <label>Tanggal Selesai (opsional)</label>
+          <input type="date" id="f-date-end">
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="f-status">
+            <option value="Selesai">Selesai</option>
+            <option value="Sedang Berjalan">Sedang Berjalan</option>
+            <option value="Hiatus">Hiatus</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Players -->
+      <div class="form-section">
+        <div class="form-section-title">Pemain</div>
+        <div id="players-list">
+          <div class="player-row">
+            <input type="text" placeholder="Nama karakter / pemain" class="player-input">
+            <button class="btn-icon" onclick="removePlayer(this)" title="Hapus">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-player" onclick="addPlayer()">+ Tambah Pemain</button>
+      </div>
+
+      <!-- Description -->
+      <div class="form-section">
+        <div class="form-section-title">Deskripsi & Catatan</div>
+        <div class="field">
+          <label>Sinopsis Campaign *</label>
+          <textarea id="f-synopsis" placeholder="Ceritakan setting dan konflik utama campaign ini..."></textarea>
+        </div>
+        <div class="field">
+          <label>Catatan GM (opsional)</label>
+          <textarea id="f-notes" placeholder="Momen berkesan, catatan khusus, dll..."></textarea>
+        </div>
+        <div class="field">
+          <label>Atmosfer / Vibe</label>
+          <select id="f-vibe">
+            <option value="classic-adventure">Classic Adventure</option>
+            <option value="horror-dark">Horror / Dark Fantasy</option>
+            <option value="political-intrigue">Political Intrigue</option>
+            <option value="epic-fantasy">Epic Fantasy</option>
+            <option value="comedy-lighthearted">Comedy / Lighthearted</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-generate" onclick="generatePage()" id="gen-btn">
+        <span id="gen-btn-text">⚔ Generate Halaman Campaign</span>
+      </button>
+    </aside>
+
+    <!-- ─── MAIN / PREVIEW ─── -->
+    <div class="main-area">
+      <div class="preview-toolbar">
+        <div class="preview-status">
+          <div class="status-dot" id="status-dot"></div>
+          <span id="status-text">Isi form lalu klik Generate</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn-action" id="btn-copy-html" disabled onclick="copyHTML()">Salin HTML</button>
+          <button class="btn-action primary" id="btn-download" disabled onclick="downloadHTML()">⬇ Download HTML</button>
+        </div>
+      </div>
+
+      <div class="preview-container">
+        <!-- Preview Frame -->
+        <div class="preview-frame-wrap" style="position:relative;">
+          <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loading-msg">Mempersiapkan sihir...</div>
+          </div>
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">📜</div>
+            <div class="empty-title">Preview akan muncul di sini</div>
+            <div class="empty-text">Isi form di sebelah kiri, lalu generate!</div>
+          </div>
+          <iframe id="preview" style="display:none;"></iframe>
+        </div>
+
+        <!-- Index snippet -->
+        <div class="index-card" id="index-card" style="display:none;">
+          <div class="index-card-title">📋 Tambahkan card ini ke index.html (di bagian campaigns-grid)</div>
+          <div class="code-block" style="position:relative;">
+            <button class="btn-copy-code" onclick="copySnippet()">Salin</button>
+            <pre id="snippet-code"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let generatedHTML = '';
+    let currentFilename = '';
+
+    /* ── PLAYERS ── */
+    function addPlayer() {
+      const list = document.getElementById('players-list');
+      const row = document.createElement('div');
+      row.className = 'player-row';
+      row.innerHTML = `<input type="text" placeholder="Nama karakter / pemain" class="player-input">
+        <button class="btn-icon" onclick="removePlayer(this)" title="Hapus">✕</button>`;
+      list.appendChild(row);
+      row.querySelector('input').focus();
+    }
+
+    function removePlayer(btn) {
+      const rows = document.querySelectorAll('.player-row');
+      if (rows.length <= 1) { btn.closest('.player-row').querySelector('input').value = ''; return; }
+      btn.closest('.player-row').remove();
+    }
+
+    /* ── STEPS ── */
+    function setStep(n) {
+      [1,2,3].forEach(i => {
+        const el = document.getElementById('step'+i);
+        el.classList.remove('active','done');
+        if (i < n) el.classList.add('done');
+        if (i === n) el.classList.add('active');
+      });
+    }
+
+    /* ── STATUS ── */
+    function setStatus(state, msg) {
+      const dot = document.getElementById('status-dot');
+      dot.className = 'status-dot ' + (state || '');
+      document.getElementById('status-text').textContent = msg;
+    }
+
+    /* ── COLLECT FORM DATA ── */
+    function getFormData() {
+      const title = document.getElementById('f-title').value.trim();
+      const number = document.getElementById('f-number').value.trim();
+      const path = document.getElementById('f-path').value.trim();
+      const system = document.getElementById('f-system').value;
+      const level = document.getElementById('f-level').value.trim();
+      const dateStart = document.getElementById('f-date-start').value;
+      const dateEnd = document.getElementById('f-date-end').value;
+      const status = document.getElementById('f-status').value;
+      const synopsis = document.getElementById('f-synopsis').value.trim();
+      const notes = document.getElementById('f-notes').value.trim();
+      const vibe = document.getElementById('f-vibe').value;
+      const players = Array.from(document.querySelectorAll('.player-input'))
+        .map(i => i.value.trim()).filter(Boolean);
+
+      if (!title) { alert('Nama campaign harus diisi!'); return null; }
+      if (!synopsis) { alert('Sinopsis campaign harus diisi!'); return null; }
+
+      const formatDate = (d) => {
+        if (!d) return '';
+        const [y,m,day] = d.split('-');
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
+      };
+
+      const dateRange = dateStart
+        ? (dateEnd ? `${formatDate(dateStart)} – ${formatDate(dateEnd)}` : formatDate(dateStart))
+        : '';
+
+      return { title, number, path, system, level, dateRange, status, synopsis, notes, vibe, players };
+    }
+
+    /* ── GENERATE ── */
+    async function generatePage() {
+      const data = getFormData();
+      if (!data) return;
+
+      setStep(2);
+      setStatus('generating', 'AI sedang menulis halaman...');
+
+      const btn = document.getElementById('gen-btn');
+      const btnText = document.getElementById('gen-btn-text');
+      btn.disabled = true;
+      btnText.textContent = '✦ Generating...';
+
+      document.getElementById('btn-download').disabled = true;
+      document.getElementById('btn-copy-html').disabled = true;
+      document.getElementById('empty-state').style.display = 'none';
+      document.getElementById('preview').style.display = 'none';
+      document.getElementById('index-card').style.display = 'none';
+
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('visible');
+
+      const msgs = ['Mempersiapkan sihir...','Memanggil AI...','Menulis lore campaign...','Membangun halaman...','Hampir selesai...'];
+      let mi = 0;
+      const msgInterval = setInterval(() => {
+        document.getElementById('loading-msg').textContent = msgs[Math.min(mi++, msgs.length-1)];
+      }, 2000);
+
+      const vibeDescriptions = {
+        'classic-adventure': 'classic heroic adventure fantasy, dungeon crawling, exploration',
+        'horror-dark': 'dark horror fantasy, ominous atmosphere, creepy dungeons',
+        'political-intrigue': 'political intrigue, complex factions, moral dilemmas',
+        'epic-fantasy': 'epic high fantasy, world-saving stakes, legendary heroes',
+        'comedy-lighthearted': 'lighthearted comedy, fun hijinks, memorable silly moments'
+      };
+
+      const prompt = `Kamu adalah web developer untuk portofolio Sunnysid33, seorang #DutaPathfinder2e Indonesia. 
+Buat halaman HTML LENGKAP untuk campaign page berikut. Ikuti template desain yang sudah ada dengan PERSIS.
+
+DATA CAMPAIGN:
+- Judul: ${data.title}
+- Nomor: ${data.number || 'N/A'}
+- Adventure Path: ${data.path || data.title}
+- Sistem: ${data.system}
+- Level: ${data.level || 'N/A'}
+- Tanggal: ${data.dateRange || 'N/A'}
+- Status: ${data.status}
+- Pemain: ${data.players.length > 0 ? data.players.join(', ') : 'N/A'}
+- Sinopsis: ${data.synopsis}
+- Catatan GM: ${data.notes || 'N/A'}
+- Vibe/Atmosfer: ${vibeDescriptions[data.vibe]}
+
+TEMPLATE WAJIB DIIKUTI (CSS variables ini HARUS ada persis di :root):
+--navy: #00183e; --navy-dk: #000e27; --navy-lt: #0a2d5f; --gold: #c9a84c; --gold-lt: #e6c97a; --gold-dk: #8a6d2f; --cream: #fdf8f0; --white: #ffffff; --smoke: #f4f1eb; --text: #2a2520; --muted: #6b6560; --border: #e2d9c8;
+
+STRUKTUR HTML WAJIB:
+1. Doctype html, lang="id", charset UTF-8, viewport meta
+2. Google Fonts: Cinzel+Decorative:wght@700, Cinzel:wght@400;600;700, Crimson+Pro (semua weights)
+3. NAV: fixed, background rgba(0,14,39,0.95), logo "Sunnysid33" (gold), link kembali ke "← Campaigns" yang mengarah ke "index.html#campaigns"
+4. PAGE HERO: background ${data.vibe === 'horror-dark' ? '#05080f' : 'var(--navy-dk)'}, padding 9rem 2rem 5rem, text center, dengan ::before radial-gradient overlay dan ::after texture SVG pattern (gunakan pattern ornament dari sinopsis, buat lebih dramatis sesuai vibe)
+   - page-number: "Campaign · ${data.number || 'XX'}"
+   - page-title: "${data.title}" (font Cinzel, besar, bold)
+   - page-divider: 60px lebar, 2px, gold gradient
+   - page-subtitle: kalimat tagline singkat yang dramatis sesuai sinopsis (italic, redam)
+5. MAIN (max-width 820px, margin auto, padding 5rem 2rem):
+   a. .overview card: border-top 3px gold, padding 2.5rem 3rem, section-eyebrow "Sinopsis", section-heading "Session Overview", paragraph sinopsis yang diperluas dan ditulis ulang dengan gaya GM yang menarik (minimal 3 kalimat)
+   b. .details-grid (2 kolom): 4 detail cards untuk Level, Adventure Path, Sistem, Tanggal
+   c. .players-section (background var(--navy)): section-eyebrow "Adventurers", section-heading "Pemain", player chips gold
+   d. .note-card (border-left 4px gold): catatan GM yang ditulis ulang secara menarik
+   e. .back-section: tombol "← Kembali ke Campaigns" mengarah ke "index.html#campaigns"
+6. FOOTER: background var(--navy-dk), teks "© 2025 Sunnysid33 · #Duta Pathfinder 2e Indonesia"
+
+GAYA PENULISAN:
+- Sinopsis diperluas dan ditulis ulang dengan bahasa yang lebih dramatis dan engaging (bahasa Indonesia)
+- Catatan GM dibuat menarik, personal, berkesan
+- Tagline hero harus puitis dan sesuai vibe ${data.vibe}
+
+OUTPUT: Hanya HTML mentah lengkap, TANPA markdown code fence, TANPA penjelasan apapun. Dimulai dari <!doctype html> langsung.`;
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 4000,
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+
+        clearInterval(msgInterval);
+
+        if (!res.ok) throw new Error('API error: ' + res.status);
+
+        const json = await res.json();
+        let html = json.content.map(b => b.type === 'text' ? b.text : '').join('');
+
+        html = html.replace(/^```html\n?/,'').replace(/^```\n?/,'').replace(/\n?```$/,'').trim();
+
+        generatedHTML = html;
+
+        const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+        currentFilename = slug + '.html';
+
+        const frame = document.getElementById('preview');
+        frame.srcdoc = html;
+        frame.style.display = 'block';
+        overlay.classList.remove('visible');
+
+        document.getElementById('btn-download').disabled = false;
+        document.getElementById('btn-copy-html').disabled = false;
+
+        buildSnippet(data, slug);
+        document.getElementById('index-card').style.display = 'block';
+
+        setStatus('ready', `"${data.title}" siap didownload!`);
+        setStep(3);
+
+        btn.disabled = false;
+        btnText.textContent = '⚔ Generate Ulang';
+
+      } catch(err) {
+        clearInterval(msgInterval);
+        overlay.classList.remove('visible');
+        document.getElementById('empty-state').style.display = 'block';
+        setStatus('', 'Error: ' + err.message);
+        btn.disabled = false;
+        btnText.textContent = '⚔ Generate Halaman Campaign';
+        setStep(1);
+        alert('Terjadi error: ' + err.message);
+      }
+    }
+
+    /* ── BUILD INDEX SNIPPET ── */
+    function buildSnippet(data, slug) {
+      const numDisplay = data.number ? `Campaign · ${data.number.padStart(2,'0')}` : 'Campaign';
+      const players = data.players.join(', ') || 'N/A';
+      const snippet = `<div class="campaign-card">
+  <div class="card-banner">
+    <div class="card-number">${numDisplay}</div>
+    <div class="card-title">${data.title}</div>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <div class="meta-item">
+        <span class="meta-label">Level</span>
+        <span class="meta-value">${data.level || 'N/A'}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Sistem</span>
+        <span class="meta-value">PF2e Remaster</span>
+      </div>
+    </div>
+    <p class="card-desc">${data.synopsis.substring(0,120)}...</p>
+    <a href="${slug}.html" class="card-link">Lihat Session →</a>
+  </div>
+</div>`;
+      document.getElementById('snippet-code').textContent = snippet;
+    }
+
+    /* ── DOWNLOAD ── */
+    function downloadHTML() {
+      if (!generatedHTML) return;
+      const blob = new Blob([generatedHTML], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = currentFilename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    /* ── COPY HTML ── */
+    function copyHTML() {
+      if (!generatedHTML) return;
+      navigator.clipboard.writeText(generatedHTML).then(() => {
+        const btn = document.getElementById('btn-copy-html');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Tersalin!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    }
+
+    /* ── COPY SNIPPET ── */
+    function copySnippet() {
+      const code = document.getElementById('snippet-code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.btn-copy-code');
+        btn.textContent = '✓ Tersalin!';
+        setTimeout(() => btn.textContent = 'Salin', 2000);
+      });
+    }
+  </script>
+</body>
+</html>

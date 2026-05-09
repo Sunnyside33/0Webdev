@@ -1,71 +1,455 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Jasa GM & Foundry - Sunnysid33</title>
-  
-  <!-- Fonts & Styles (Copy dari index.html biar gampang) -->
+  <title>Jasa GM & Foundry VTT — Sunnysid33</title>
+  <meta name="description" content="Jasa GM Pathfinder 2e dan sewa Foundry VTT bersama Sunnysid33. Private session online/offline dan server Foundry siap pakai.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpg" href="Images/telor.jpg">
-  
-  <!-- Google tag (gtag.js) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17884928203"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'AW-17884928203');
   </script>
-
-  <!-- Kode Vercel Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
 
-  <!-- CSS (Samakan dengan index.css nanti, atau copy paste stylenya disini dulu) -->
-  <!-- Untuk sekarang, kita pakai CSS inline sederhana dulu supaya cepat jadi -->
   <style>
-     /* Copy semua CSS yang sama dari index.txt/index.html ke sini nanti ya.
-        Biar singkat sekarang, aku tulis style dasar aja dulu.
-     */
-     body { font-family: 'Lato', sans-serif; color: #333; margin: 0; line-height: 1.6; }
-     h1, h2 { font-family: 'Cinzel', serif; color: #00183e; }
-     .container { max-width: 800px; margin: 4rem auto; padding: 0 2rem; text-align: center; }
-     .btn { display: inline-block; padding: 1rem 2rem; background: #00183e; color: white; text-decoration: none; border-radius: 6px; margin-top: 1rem;}
-     .btn:hover { background: #0a2d5f; }
-     .btn-wa {display: inline-block; padding: 1rem 2rem; background: #25D366; color: white; text-decoration: none; border-radius: 6px; margin-top: 1rem;}
-     .box { background: #f8f9fa; padding: 2rem; border-radius: 8px; margin: 2rem 0; border: 1px solid #e5e5e5; }
+    :root {
+      --navy:    #00183e;
+      --navy-dk: #000e27;
+      --navy-lt: #0a2d5f;
+      --gold:    #c9a84c;
+      --gold-lt: #e6c97a;
+      --gold-dk: #8a6d2f;
+      --cream:   #fdf8f0;
+      --white:   #ffffff;
+      --smoke:   #f4f1eb;
+      --text:    #2a2520;
+      --muted:   #6b6560;
+      --border:  #e2d9c8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(0,14,39,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-back:hover { color: var(--gold-lt); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--navy-dk);
+      padding: 9rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 80% at 50% 120%, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .page-hero-inner { position: relative; z-index: 1; }
+
+    .page-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.55);
+      font-style: italic;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .page-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem auto;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px,1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 50px rgba(0,14,39,0.1);
+    }
+
+    .service-header {
+      background: var(--smoke);
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+
+    .service-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .service-tagline {
+      font-size: 1rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .service-body {
+      padding: 2rem 2.5rem;
+    }
+
+    .service-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .service-features li {
+      font-size: 1rem;
+      color: var(--text);
+      padding: 0.4rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-features li:last-child { border-bottom: none; }
+
+    .service-features li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.7rem;
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .service-price-box {
+      background: var(--navy);
+      padding: 1rem 1.5rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .price-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .btn-wa {
+      display: block;
+      text-align: center;
+      padding: 0.9rem 2rem;
+      background: #25D366;
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .btn-wa:hover {
+      background: #1db954;
+      transform: translateY(-2px);
+    }
+
+    /* FAQ / Note Section */
+    .note-section {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 2rem 2.5rem;
+      border-radius: 2px;
+    }
+
+    .note-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .note-section p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* Back link */
+    .back-section {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.25s;
+    }
+
+    .btn-back:hover { background: var(--navy-lt); }
+
+    footer {
+      background: var(--navy-dk);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    footer p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.25);
+      margin: 0;
+    }
+
+    footer span { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-body, .service-header { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Jasa GM & Foundry VTT</h1>
-    <p>Ingin bermain Pathfinder 2e bersama teman-teman tapi butuh GM?
-        Atau kamu GM yang pengen cobain FoundryVTT tapi terkendala budget?</p>
+  <nav>
+    <a href="index.html" class="nav-logo">Sunnysid33</a>
+    <a href="index.html" class="nav-back">← Kembali ke Beranda</a>
+  </nav>
 
-    <div class="box">
-      <h2>Private Session (GM Service)</h2>
-      <p>Aku menawarkan sesi privat (online atapun offline) untuk grupmu. Aku akan menyiapkan module, music, sfx, dan cerita yang sesuai dengan grupmu.</p>
-      <p><strong>Harga:</strong> Mulai dari Rp 30.000/sesi tiap orang.</p>
-      <a href="https://wa.wizard.id/Sunnysid33" class="btn-wa">Book Sesi Sekarang!</a>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <p class="page-eyebrow">Layanan</p>
+      <h1 class="page-title">Jasa GM & Foundry VTT</h1>
+      <div class="page-divider"></div>
+      <p class="page-subtitle">
+        Mau main Pathfinder 2e tapi belum punya GM? Atau butuh server Foundry yang stabil? 
+        Aku siap membantu.
+      </p>
     </div>
-
-    <div class="box">
-      <h2>Sewa Foundry VTT</h2>
-      <p>Gunakan server DigitalOcean pribadiku. Stabil, cepat, dan aku bantu setup modulnya.</p>
-      <p><strong>Harga:</strong> Rp 20.000/hari</p>
-      <a href="https://wa.wizard.id/FoundryVTT" class="btn-wa">Sewa FoundryVTT</a>
-    </div>
-
-    <a href="index.html" class="btn">Kembali ke Beranda</a>
   </div>
+
+  <main>
+    <div class="services-grid">
+
+      <!-- GM Service -->
+      <div class="service-card">
+        <div class="service-header">
+          <span class="service-icon">⚔️</span>
+          <div class="service-name">Private Session (GM Service)</div>
+          <div class="service-tagline">Online maupun offline, siap mengadventure!</div>
+        </div>
+        <div class="service-body">
+          <p class="service-desc">
+            Aku akan memimpin sesi Pathfinder 2e untuk grupmu, mulai dari setup module di Foundry VTT, 
+            musik dan SFX ambient, hingga cerita yang berkembang sesuai keputusan karaktermu.
+          </p>
+          <ul class="service-features">
+            <li>Sesi online via Foundry VTT atau offline (Surabaya area)</li>
+            <li>Module resmi Paizo siap pakai</li>
+            <li>Musik, ambient sound, dan SFX in-session</li>
+            <li>Cerita disesuaikan dengan karakter &amp; grupmu</li>
+            <li>Cocok untuk pemula — aku bantu jelasin sistem PF2e</li>
+          </ul>
+          <div class="service-price-box">
+            <span class="price-label">Harga</span>
+            <span class="price-value">Mulai Rp 30.000 / sesi per orang</span>
+          </div>
+          <a href="https://wa.wizard.id/Sunnysid33" class="btn-wa" target="_blank" rel="noopener">📱 Book Sesi via WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- Foundry Service -->
+      <div class="service-card">
+        <div class="service-header">
+          <span class="service-icon">🖥️</span>
+          <div class="service-name">Sewa Foundry VTT</div>
+          <div class="service-tagline">Server stabil, setup mudah, langsung main!</div>
+        </div>
+        <div class="service-body">
+          <p class="service-desc">
+            Punya grup dan GM sendiri, tapi terkendala biaya server Foundry? 
+            Gunakan server DigitalOcean pribadiku yang stabil dan responsif. Aku bantu setup penuh.
+          </p>
+          <ul class="service-features">
+            <li>Server DigitalOcean — uptime stabil &amp; cepat</li>
+            <li>Bantuan instalasi system &amp; module pilihanmu</li>
+            <li>Akses penuh sebagai GM ke world milikmu</li>
+            <li>Support via WhatsApp selama masa sewa</li>
+            <li>Flexibel — sewa per hari sesuai kebutuhan</li>
+          </ul>
+          <div class="service-price-box">
+            <span class="price-label">Harga</span>
+            <span class="price-value">Rp 20.000 / hari</span>
+          </div>
+          <a href="https://wa.wizard.id/FoundryVTT" class="btn-wa" target="_blank" rel="noopener">📱 Sewa Foundry via WhatsApp</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Note -->
+    <div class="note-section">
+      <div class="note-title">💡 Catatan</div>
+      <p>
+        Untuk sesi offline, saat ini hanya melayani area <strong>Surabaya dan sekitarnya</strong>. 
+        Untuk sesi online, bisa dari mana saja di Indonesia. Tidak familiar dengan Pathfinder 2e? 
+        Tenang — aku menyediakan sesi orientasi gratis untuk pemula dalam paket GM Service.
+        Hubungi aku via WhatsApp untuk diskusi lebih lanjut!
+      </p>
+    </div>
+
+    <div class="back-section">
+      <a href="index.html" class="btn-back">← Kembali ke Beranda</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 <span>Sunnysid33</span> · #Duta Pathfinder 2e Indonesia</p>
+  </footer>
 
 </body>
 </html>
